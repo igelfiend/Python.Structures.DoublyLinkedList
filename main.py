@@ -37,14 +37,23 @@ class DoublyLinkedList:
     # removing first-founded node by value
     def remove_by_value(self, value):
         node = self.head
+        print("before removing:", self.to_values_list())
         while node is not None:
             if node.value == value:
-                node.prev.next = node.next
-                node.next.prev = node.prev
+                print("remove ", value)
+                if node.prev is not None:
+                    print("node is not first")
+                    node.prev.next = node.next
+                if node.next is not None:
+                    print("node is not last")
+                    node.next.prev = node.prev
                 del node
-                return
+                # return
+                break
 
             node = node.next
+
+        print("after removing: ", self.to_values_list())
 
     # inserting node after target node
     def insert_after(self, new_node, target_node):
