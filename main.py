@@ -34,36 +34,57 @@ class DoublyLinkedList:
 
         return result
 
+    # getter i-element
+    def get(self, index):
+        i = 0
+        node = self.head
+
+        while node is not None:
+            if index == i:
+                return node
+
+            i += 1
+            node = node.next
+
+        return None
+
     # removing first-founded node by value
     def remove_by_value(self, value):
         node = self.head
-        print("before removing:", self.to_values_list())
         while node is not None:
             if node.value == value:
-                print("remove ", value)
-                if node.prev is not None:
-                    print("node is not first")
+                if node.prev is None:
+                    self.head = node.next
+                    self.head.prev = None
+                elif node.next is None:
+                    self.tail = node.prev
+                    self.tail.next = None
+                else:
                     node.prev.next = node.next
-                if node.next is not None:
-                    print("node is not last")
                     node.next.prev = node.prev
+
                 del node
-                # return
-                break
+                return
 
             node = node.next
 
-        print("after removing: ", self.to_values_list())
-
     # inserting node after target node
     def insert_after(self, new_node, target_node):
+        if target_node is None:
+            return
+
         node = self.head
         while node is not None:
             if node == target_node:
                 # setting scheme: [ node <-> new_node <-> node.next ]
+
+                if node.next is None:
+                    self.tail = new_node        # in tail case move tail-pointer
+                else:
+                    node.next.prev = new_node   # previous node for next node will be new node
+
                 new_node.next = node.next   # after new node will go next node
                 new_node.prev = node        # current node will be before new node
-                node.next.prev = new_node   # previous node for next node will be new node
                 node.next = new_node        # after current node will go new node
 
                 return
