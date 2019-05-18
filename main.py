@@ -102,11 +102,3 @@ class DoublyLinkedList:
             self.head.prev = item
             item.prev = None
         self.head = item
-
-
-def main():
-    pass
-
-
-if __name__ == "__main__":
-    main()
