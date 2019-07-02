@@ -73,7 +73,9 @@ class LinkedList2:
                 """
                 if node == self.head:
                     self.head = self.head.next
-                    self.head.prev = None
+                    # Head can stands None (single-element-list-case), so checking it
+                    if self.head is not None:
+                        self.head.prev = None
 
                 """
                 If deleted node is tail:
@@ -82,7 +84,9 @@ class LinkedList2:
                 """
                 if node == self.tail:
                     self.tail = node.prev
-                    self.tail.next = None
+                    # Tail can stands None (single-element-list-case), so checking it
+                    if self.tail is not None:
+                        self.tail.next = None
 
                 """ Update other ptrs """
                 if node.prev is not None:

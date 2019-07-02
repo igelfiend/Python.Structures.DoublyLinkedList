@@ -5,28 +5,6 @@ import unittest
 from main import *
 
 
-def prepare_list():
-    result = LinkedList2()
-    result.add_in_tail(Node(32))
-    result.add_in_tail(Node(42))
-    result.add_in_tail(Node(12))
-    result.add_in_tail(Node(45))
-    result.add_in_tail(Node(47))
-    result.add_in_tail(Node(49))
-    result.add_in_tail(Node(24))
-    result.add_in_tail(Node(32))
-    result.add_in_tail(Node(11))
-    result.add_in_tail(Node(55))
-
-    return result
-
-
-def check_element_pointers(linked_list, check_list):
-    normal_queue_ok = linked_list.to_values_list() == check_list
-    reversed_queue_ok = linked_list.to_values_list( reversed=True ) == check_list[::-1]
-    return normal_queue_ok and reversed_queue_ok
-
-
 class MyTestCase(unittest.TestCase):
     # ---------- DELETE TESTS ----------------------------------------------------
     def test_delete(self):
@@ -82,6 +60,28 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(test_list.to_values_list(reversed=True), result_list[::-1],
                          "Testing: 'delete'. Trying delete node from that list. Wrong result reversed arrays.")
 
+    def test_delete_from_list_with_single_element(self):
+        base_list = [42]
+        test_list = LinkedList2(base_list)
+        test_list.delete(42)
+        result_list = []
+        self.assertEqual(test_list.to_values_list(), result_list,
+                         "Testing: 'delete'. "
+                         "Trying delete node from list with single element. "
+                         "Wrong result arrays.")
+        self.assertEqual(test_list.to_values_list(reversed=True), result_list[::-1],
+                         "Testing: 'delete'. "
+                         "Trying delete node from list with single element. "
+                         "Wrong result reversed arrays.")
+        self.assertEqual(test_list.head, None,
+                         "Testing: 'delete'. "
+                         "Trying delete node from list with single element. "
+                         "Head is not None.")
+        self.assertEqual(test_list.tail, None,
+                         "Testing: 'delete'. "
+                         "Trying delete node from list with single element. "
+                         "Tail is not None.")
+
     # ---------- DELETE ALL TESTS ----------------------------------------------------
 
     def test_delete_all(self):
@@ -114,9 +114,13 @@ class MyTestCase(unittest.TestCase):
         test_list.delete(45, all=True)
         result_list = [32, 42, 12, 47, 49, 24, 12, 32, 11, 55, 32]
         self.assertEqual(test_list.to_values_list(), result_list,
-                         "Testing: 'delete all'. Deleting elements which comes one by one. Wrong result arrays.")
+                         "Testing: 'delete all'. "
+                         "Deleting elements which comes one by one. "
+                         "Wrong result arrays.")
         self.assertEqual(test_list.to_values_list(reversed=True), result_list[::-1],
-                         "Testing: 'delete all'. Deleting elements which comes one by one. Wrong result reversed arrays.")
+                         "Testing: 'delete all'. "
+                         "Deleting elements which comes one by one. "
+                         "Wrong result reversed arrays.")
 
     def test_delete_all_elements_goes_one_by_one_in_head_and_tail(self):
         base_list = [32, 32, 32, 42, 12, 45, 47, 49, 24, 12, 11, 55, 32, 32]
